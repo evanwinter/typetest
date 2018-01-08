@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", function(event) {
 
 	async function getRandomInt() {
-		let min = 0;
-		let max = 10;
+		let min = 1;
+		let max = 9;
 		min = Math.ceil(min);
 	  max = Math.floor(max);
 	  return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
@@ -25,7 +25,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	}
 
 	function beginTest() {
-		console.log('Beginning test.');
 
 		// Show test content.
 		initializeDemoText(0, 19, 0);
@@ -64,7 +63,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	}
 
 	function initializeDemoText(start, end, current) {
-		console.log(tokenizedText);
 		let currentWord = '<span id="current">' + tokenizedText[current] + '</span> '
 		let after = '';
 		let afterSlice = tokenizedText.slice(current+1, current+20);
@@ -134,38 +132,32 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	function getLevDist(current, word) {
 		let userWord = word;
 		let actualWord = tokenizedText[current];
-		console.log(userWord);
-		console.log(actualWord);
 
-		if(userWord.length === 0) return actualWord.length; 
-		if(actualWord.length === 0) return userWord.length; 
+		if (userWord.length === 0) return actualWord.length; 
+		if (actualWord.length === 0) return userWord.length; 
 
 		let matrix = [];
 
 		// increment along the first column of each row
-		let i;
-		for(i = 0; i <= actualWord.length; i++){
+		for (let i = 0; i <= actualWord.length; i++)
 			matrix[i] = [i];
-		}
 
 		// increment each column in the first row
-		let j;
-		for(j = 0; j <= userWord.length; j++){
-	    	matrix[0][j] = j;
-		}
+		for (let j = 0; j <= userWord.length; j++)
+    	matrix[0][j] = j;
 
 		// Fill in the rest of the matrix
-		for(i = 1; i <= actualWord.length; i++){
-		    for(j = 1; j <= userWord.length; j++){
-		    	if(actualWord.charAt(i-1) === userWord.charAt(j-1)){
-		        	matrix[i][j] = matrix[i-1][j-1];
-		    	} else {
-		        	matrix[i][j] = Math.min(matrix[i-1][j-1] + 1, // substitution
-		                                Math.min(matrix[i][j-1] + 1, // insertion
-		                                         matrix[i-1][j] + 1)); // deletion
-		    		}	
-	    	}
-	  	}
+		for (i = 1; i <= actualWord.length; i++) {
+	    for (j = 1; j <= userWord.length; j++) {
+	    	if (actualWord.charAt(i-1) === userWord.charAt(j-1))
+        	matrix[i][j] = matrix[i-1][j-1];
+	    	else {
+        	matrix[i][j] = Math.min(matrix[i-1][j-1] + 1, // substitution
+	                          Math.min(matrix[i][j-1] + 1, // insertion
+				                           matrix[i-1][j] + 1)); // deletion
+    		}	
+    	}
+	  }
 
 		let levDist = matrix[actualWord.length][userWord.length];
 		return levDist;
@@ -188,13 +180,35 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	}
 
 	async function getText() {
-		// getOtherAPI();
-		// getOtherAPI();
-		// getOtherAPI();
-		await getNYT();
+		// await getNYT();
+		// await getHN();
+
+		const filename = 'sample_texts.json';
+		let res = await fetch(filename);
+		let data = await res.json();
+		console.log(data);
+
 
 		testIsReady();
 	}
+
+	// async function getHN() {
+	// 	let url = 'https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty';
+	// 	let req = new Request(url, {
+	// 		method: 'GET'
+	// 	});
+	// 	let res = await fetch(req);
+	// 	let data = await res.json();
+	// 	let rand = await getRandomInt();
+	// 	let story = data[rand];
+		
+	// 	url = `https://hacker-news.firebaseio.com/v0/item/${story}.json?print=pretty`
+	// 	req = new Request(url, {
+	// 		method: 'GET'
+	// 	});
+	// 	res = await fetch(req);
+	// 	data = await res.json();
+	// }
 
 	async function getNYT() {
 		const url = "https://cors-anywhere.herokuapp.com/https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=f187a46ff70742b38ee1fa75062dc1f2";
@@ -203,10 +217,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		});
 		let res = await fetch(req);
 		let data = await res.json();
+		console.log(data);
 		let rand = await getRandomInt();
-		console.log(data.response.docs[rand]);
-		tokenizedText = data.response.docs[rand].snippet.split(' ');
-		tokenizedText = 'Glamour cannot exist without personal social envy being a common and widespread emotion. The industrial society which has moved towards democracy and then stopped half way is the ideal society for generating such an emotion. The pursuit of individual happiness has been acknowledged as a universal right. Yet the existing social condition make the individual feel powerless. He lives in the contradiction between what he is and what he would like to be. Either he then becomes fully conscious of the contradiction and its causes, and so joins the political struggle for a full democracy which entails, amongst other things, the overthrow of capitalism; or else he lives, continually subject to an envy which, compounded with his sense of powerlessness, dissolves into recurrent day-dreams.'.split(' ');
+		let text = data.response.docs[rand-1].snippet + ' ' + data.response.docs[rand].snippet + ' ' + data.response.docs[rand+1].snippet;
+		tokenizedText = text.split(' ')
 	}
 
 	function testIsReady() {

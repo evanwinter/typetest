@@ -21,11 +21,11 @@ section {
 
 ul {
 	padding: 0;
+	list-style: none;
 }
 
-li {
+nav li {
 	display: inline;
-	list-style: none;
 }
 
 a, a:visited {
@@ -101,6 +101,7 @@ button:hover {
 }
 
 #current {
-	padding: 8px;
-	background-color: #f3f3f4;
+	padding: 5px;
+	background-color: #ddd;
+	border-radius: 3px;
 }
