@@ -2,38 +2,16 @@
 <html>
 <head>
 	<title>
-		WPM
+		TypeTest
 	</title>
-	<link rel="stylesheet" type="text/css" href="styles.css">
+	<link rel="stylesheet" type="text/css" href="css/styles.min.css">
 
 </head>
 <body>
 <div class="container">
 
-<header>
-	<nav>
-		<ul>
-			<li><b>WPM</b></li>
-			<li> by <a href="http://evanwinter.me" target="_blank">Evan Winter</a></li>
-		</ul>
-	</nav>
-</header>
-
-<section id="template-wrapper">
-	<div id="template">
-		Click start or press the spacebar to begin!
-	</div>
-</section>
-
-<section id="input-section">
-	
-	<input id="input-field" class="disabled" type="text" name="input" disabled>
-
-	<div class="buttons">
-		<button id="start-button">start</button>
-		<a href="index.html"><button id="reset-button">reset</button></a>
-	</div>
-
+<section id="timer">
+	60
 </section>
 
 <section id="results-section">
@@ -42,11 +20,31 @@
 	</div>
 </section>
 
-<section id="timer">
-	60
+<section id="template-wrapper">
+	<div id="template">
+		Press space to begin
+	</div>
 </section>
+
+<section id="input-section">
+	
+	<input id="input-field" class="disabled" type="text" name="input" disabled>
+
+	<div class="buttons">
+		<button id="start-button">Start</button>
+		<a href="index.html"><button id="reset-button">Reset</button></a>
+	</div>
+
+</section>
+
+<footer>
+	<ul>
+		<li>TypeTest</li>
+		<li> by <a href="http://evanwinter.me" target="_blank">Evan Winter</a></li>
+	</ul>
+</footer>
 
 </div>
 </body>
-<script type="text/javascript" src="main.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
 </html>

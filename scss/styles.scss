@@ -1,0 +1,108 @@
+$accent: blue;
+
+body {
+	margin: 0;
+	padding: 0;
+	background-color: white;
+	font-family: system-ui;
+	height: 1000px;
+}
+
+.container {
+	width: 90%;
+	margin: 0 auto;
+	max-width: 1200px;
+	padding-top: 30px;
+}
+
+section {
+	margin-top: 20px;
+}
+
+ul {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+nav li {
+	display: inline;
+}
+
+a, a:visited {
+	text-decoration: none;
+	color: black;
+}
+
+a:hover {
+	color: blue;
+}
+
+#template-wrapper {
+	padding: 30px;
+	background-color: white;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+}
+
+#template {
+	font-size: 1.5rem;
+}
+
+#input-section {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	margin-top: 10px;
+}
+
+#input-field {
+	font-size: 1.5em;
+	outline: none !important;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	display: block;
+	padding: 30px;
+	background-color: #eee;
+}
+
+.disabled:hover {
+	cursor: not-allowed;
+}
+
+.buttons {
+	margin-top: 10px;
+	justify-content: center;
+}
+
+#timer {
+	font-size: 2em;
+	margin-top: 20px;
+}
+
+button {
+	padding: 10px;
+	border-radius: 3px;
+	color: black;
+	background-color: white;
+	-webkit-appearance: none;
+	// border: 1px solid #ddd;
+	font-size: 1em;
+	font-weight: 600;
+	&:focus {
+		outline: 2px solid orange;
+	}
+	&:hover {
+		cursor: pointer;
+		border: 1px solid #aaa;
+	}
+}
+
+#current {
+	padding: 4px;
+	background-color: yellow;
+	border-radius: 3px;
+}
+
+@import "results.scss";
+@import "footer.scss";
