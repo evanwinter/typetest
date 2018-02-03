@@ -53,7 +53,7 @@ function startTimer() {
 					clearInterval(interval);
 					timeUp();
 				}
-			}, 100);
+			}, 1000);
 }
 
 function timeUp() {
