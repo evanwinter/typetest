@@ -14,7 +14,7 @@ const sampleTexts = [
 
 const timer = document.getElementById('timer'),
 			inputField = document.getElementById('input-field'),
-			sampleTextEl = document.getElementById('template'),
+			template = document.getElementById('template'),
 			results = document.getElementById('results'),
 			startButton = document.getElementById('start-button'),
 			text = sampleTexts[getRandomInt(0, sampleTexts.length)],
@@ -34,10 +34,10 @@ function enableInput(inputField) {
 }
 
 function displayText(splitText) {
-	let sampleText = '<span id="current">' + splitText[0] + '</span> ';
-	for (let i = 1; i < 20; i++)
-		sampleText += (splitText[i] + ' ');
-	sampleTextEl.innerHTML = sampleText;
+	let templateStr = '<span id="current" class="word">' + splitText[0] + '</span> ';
+	for (let i = 1; i < splitText.length; i++)
+		templateStr += (' <span class="word">' + splitText[i] + '</span>');
+	template.innerHTML = templateStr;
 }
 
 function startTimer() {
@@ -59,7 +59,7 @@ function startTimer() {
 function timeUp() {
 	disableInput();
 	calculateScores();
-	outputScore();
+	displayResults();
 
 	document.getElementById('start-button').style.display = "none";
 	document.getElementById('reset-button').innerHTML = "Try Again";
@@ -72,17 +72,22 @@ function disableInput() {
 }
 
 function getUserInput(currentIndex, inputField, splitText) {
+	const highlighted = document.getElementById('current');
 	inputField.addEventListener('keydown', function(event) {
 		if (event.which === 32) {
 			let thisWord = inputField.value.trim();
 			if (thisWord !== '') {
+				
 				// Update total character and word counts.
 				totalCharCount += thisWord.length;
 				totalWordCount++;
+				
 				// Update the user's total score.
 				totalPenalties += getWordPenalty(currentIndex, splitText, thisWord);
+				
 				// Highlight the next word to be typed.
-				updateSampleText(++currentIndex, splitText);
+				let lastHighlightOffset = getElemDistance(highlighted);
+				updateSampleText(++currentIndex, splitText, lastHighlightOffset);
 				inputField.value = '';
 			}
 		}
@@ -90,39 +95,61 @@ function getUserInput(currentIndex, inputField, splitText) {
 
 }
 
-function createCompundString(words) {
+function createCompoundString(words) {
 	let compoundString = '';
 	for (let i = 0; i < words.length; i++)
-		compoundString += (words[i] + ' ');
+		compoundString += (' <span class="word">' + words[i] + '</span>');
 	return compoundString;
 }
 
-function updateSampleText(currentIndex, splitText) {
+function getElemDistance(elem) {
+    var location = 0;
+    if (elem.offsetParent) {
+        do {
+            location += elem.offsetTop;
+            elem = elem.offsetParent;
+        } while (elem);
+    }
+    return location >= 0 ? location : 0;
+};
+
+function inRange(num, lower, upper) {
+	return ((num >= lower) && (num < upper));
+}
+
+function updateSampleText(currentIndex, splitText, offset) {
+
 	// Wrap the current word in a span for highlighting.
 	let currentWord = splitText[currentIndex],
-			current = '<span id="current">' + currentWord + '</span> ';
+			currentStr = ' <span id="current" class="word">' + currentWord + '</span> ';
 
-	// Create string containing all words preceding the current word.
-	let wordsBeforeCurrent = '';
-	let before = '';
-	if (currentIndex < 5) {
-		wordsBeforeCurrent = splitText.slice(0, currentIndex);
-	} else {
-		wordsBeforeCurrent = splitText.slice(currentIndex-5, currentIndex);
+	let precedingWords,
+			precedingWordsStr,
+			followingWords,
+			followingWordsStr,
+			templateStr;
+
+	let rangeLower = 0,
+			rangeUpper = 30;
+
+	if (inRange(currentIndex, rangeLower, rangeUpper)) {
+		precedingWords = splitText.slice(rangeLower, currentIndex);
+	} else if (inRange(currentIndex, rangeLower+30, rangeUpper+30)) {
+		precedingWords = splitText.slice(rangeLower+30, currentIndex);
+	} else if (inRange(currentIndex, rangeLower+60, rangeUpper+60)) {
+		precedingWords = splitText.slice(rangeLower+60, currentIndex);
+	} else if (inRange(currentIndex, rangeLower+90, rangeUpper+90)) {
+		precedingWords = splitText.slice(rangeLower+90, currentIndex);
+	} else if (inRange(currentIndex, rangeLower+120, rangeUpper+120)) {
+		precedingWords = splitText.slice(rangeLower+120, currentIndex);
 	}
-	before = createCompundString(wordsBeforeCurrent);
-	// Create string containing all words (the next n words) following the current word.
-	let wordsAfterCurrent = '';
-	let after = '';
-	if (currentIndex < 5) {
-		wordsAfterCurrent = splitText.slice(currentIndex+1, 20);
-	} else {
-		wordsAfterCurrent = splitText.slice(currentIndex+1, currentIndex+15);
-	}
-	after = createCompundString(wordsAfterCurrent);
-	// Display the sample text with the new current word highlighted.
-	let sampleText = before + current + after;
-	sampleTextEl.innerHTML = sampleText;
+	followingWords = splitText.slice(currentIndex+1, splitText.length);
+	
+	precedingStr = createCompoundString(precedingWords);
+	followingStr = createCompoundString(followingWords);
+
+	templateStr = precedingStr + currentStr + followingStr;
+	template.innerHTML = templateStr;
 
 }
 
@@ -159,7 +186,8 @@ function calculateScores() {
 	percentAccuracy = Math.round(((totalCharCount - totalPenalties) / totalCharCount) * 100);
 }
 
-function outputScore() {
+function displayResults() {
+	results.style.display = "default";
 	results.innerHTML = `
 		<ul>
 			<li id="speed">Speed: <strong>${totalWordCount} words per minute</strong></li>
@@ -174,10 +202,19 @@ function outputScore() {
 document.addEventListener("DOMContentLoaded", function(event) {
 	
 	let currentIndex = 0;
-	
+	let started = false;
+
+	window.addEventListener('keydown', function(event) {
+		if (event.which === 32 && started === false) {
+	    event.preventDefault();
+	    startButton.click();
+	  }
+	});
+
 	startButton.focus();
 	// When user clicks Start, begin the test.
 	startButton.addEventListener('click', function() {
+		started = true;
 		enableInput(inputField);
 		displayText(splitText);
 		startTimer();

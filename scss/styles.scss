@@ -1,22 +1,30 @@
 $accent: blue;
+$light-gray: #eee;
+$med-gray: #ccc;
+$dark-gray: #aaa;
+$dark: #212529;
 
 body {
 	margin: 0;
 	padding: 0;
 	background-color: white;
-	font-family: system-ui;
+	color: $dark;
+	font-family: system-ui, "Helvetica", "Source Sans Pro";
 	height: 1000px;
+	@media (max-width: 768px) {
+
+	}
 }
 
 .container {
-	width: 90%;
+	width: 80%;
 	margin: 0 auto;
-	max-width: 1200px;
-	padding-top: 30px;
+	max-width: 50rem;
+	padding-top: 2rem;
 }
 
 section {
-	margin-top: 20px;
+	margin-top: 1.25rem;
 }
 
 ul {
@@ -31,7 +39,7 @@ nav li {
 
 a, a:visited {
 	text-decoration: none;
-	color: black;
+	color: $dark;
 }
 
 a:hover {
@@ -39,30 +47,37 @@ a:hover {
 }
 
 #template-wrapper {
-	padding: 30px;
-	background-color: white;
-	border: 1px solid #ddd;
-	border-radius: 5px;
+	font-size: 1.5rem;
+	.word {
+		padding: 0.1rem 0.2rem;
+	}
 }
 
 #template {
-	font-size: 1.5rem;
+	padding: 1.5rem;
+	background-color: white;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	position: relative;
+	overflow-y: auto;
+	max-height: 4rem;
 }
+
 
 #input-section {
 	display: flex;
 	flex-direction: column;
 	width: 100%;
-	margin-top: 10px;
+	margin-top: 0.75rem;
 }
 
 #input-field {
-	font-size: 1.5em;
+	font-size: 1.5rem;
 	outline: none !important;
 	border: 1px solid #ddd;
 	border-radius: 5px;
 	display: block;
-	padding: 30px;
+	padding: 1.5rem;
 	background-color: #eee;
 }
 
@@ -71,24 +86,27 @@ a:hover {
 }
 
 .buttons {
-	margin-top: 10px;
+	margin-top: 0.75rem;
 	justify-content: center;
 }
 
 #timer {
-	font-size: 2em;
-	margin-top: 20px;
+	font-size: 2rem;
+	margin-top: 1.25rem;
+	font-weight: 700;
 }
 
 button {
-	padding: 10px;
+	padding: 1rem;
 	border-radius: 3px;
 	color: black;
+	border: 1px solid rgb(216, 216, 216) !important;
 	background-color: white;
 	-webkit-appearance: none;
-	// border: 1px solid #ddd;
+	-moz-appearance: none;
 	font-size: 1em;
 	font-weight: 600;
+	outline: none;
 	&:focus {
 		outline: 2px solid orange;
 	}
@@ -99,7 +117,6 @@ button {
 }
 
 #current {
-	padding: 4px;
 	background-color: yellow;
 	border-radius: 3px;
 }
