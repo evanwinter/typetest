@@ -5,6 +5,7 @@
  */
 body {
   margin: 0;
+  font-size: 16px;
   padding: 0;
   background-color: white;
   color: #212529;
@@ -35,19 +36,23 @@ a, a:visited {
 a:hover {
   color: blue; }
 
-#template-wrapper {
-  font-size: 1.5rem; }
-  #template-wrapper .word {
-    padding: 0.1rem 0.2rem; }
-
 #template {
+  font-size: 1.5rem;
   padding: 1.5rem;
   background-color: white;
   border: 1px solid #ddd;
   border-radius: 5px;
   position: relative;
   overflow-y: auto;
-  max-height: 4rem; }
+  max-height: 6rem;
+  box-shadow: 0px -5px 20px white inset; }
+  #template .word {
+    padding: 0.1rem 0.2rem;
+    z-index: 0; }
+  @media (max-width: 768px) {
+    #template {
+      font-size: 1.25rem;
+      padding: 1rem; } }
 
 #input-section {
   display: flex;
@@ -111,7 +116,7 @@ footer {
   position: fixed;
   bottom: 0;
   background-color: white;
-  padding: 0.5rem 0 2rem 0;
+  padding: 0.5rem 0 3rem 0;
   box-shadow: 0px 0px 25px 20px white; }
   footer li {
     display: inline; }
