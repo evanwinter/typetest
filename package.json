@@ -1,8 +1,8 @@
 {
-  "name": "wpm-vanilla",
+  "name": "TypeTest",
   "version": "1.0.0",
-  "description": "",
-  "main": "main.js",
+  "description": "Simple web app for testing one's typing speed and accuracy.",
+  "main": "js/index.js",
   "dependencies": {
     "gulp": "^3.9.1"
   },
@@ -23,10 +23,10 @@
     "type": "git",
     "url": "git+https://github.com/evanwinter/wpm-vanilla.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Evan Winter",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/evanwinter/wpm-vanilla/issues"
+    "url": "https://github.com/evanwinter/typetest/issues"
   },
-  "homepage": "https://github.com/evanwinter/wpm-vanilla#readme"
+  "homepage": "https://github.com/evanwinter/typetest#readme"
 }
