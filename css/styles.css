@@ -5,121 +5,103 @@
  */
 body {
   margin: 0;
-  font-size: 16px;
   padding: 0;
+  font-size: 16px;
   background-color: white;
   color: #212529;
-  font-family: system-ui, "Helvetica", "Source Sans Pro";
-  height: 1000px; }
+  font-family: system-ui, "Helvetica", "Source Sans Pro"; }
 
 .container {
   width: 80%;
   margin: 0 auto;
   max-width: 50rem;
-  padding-top: 2rem; }
+  padding-top: 1.5rem; }
 
-section {
-  margin-top: 1.25rem; }
-
-ul {
-  padding: 0;
-  margin: 0;
-  list-style: none; }
-
-nav li {
-  display: inline; }
+.component {
+  border: 1px solid #ddd;
+  border-radius: 3px; }
 
 a, a:visited {
   text-decoration: none;
   color: #212529; }
-
-a:hover {
-  color: blue; }
-
-#template {
-  font-size: 1.5rem;
-  padding: 1.5rem;
-  background-color: white;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  position: relative;
-  overflow-y: auto;
-  max-height: 6rem;
-  box-shadow: 0px -5px 20px white inset; }
-  #template .word {
-    padding: 0.1rem 0.2rem;
-    z-index: 0; }
-  @media (max-width: 768px) {
-    #template {
-      font-size: 1.25rem;
-      padding: 1rem; } }
-
-#input-section {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  margin-top: 0.75rem; }
-
-#input-field {
-  font-size: 1.5rem;
-  outline: none !important;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  display: block;
-  padding: 1.5rem;
-  background-color: #eee; }
-
-.disabled:hover {
-  cursor: not-allowed; }
-
-.buttons {
-  margin-top: 0.75rem;
-  justify-content: center; }
-
-#timer {
-  font-size: 2rem;
-  margin-top: 1.25rem;
-  font-weight: 700; }
+  a:hover, a:visited:hover {
+    color: blue; }
 
 button {
   padding: 1rem;
-  border-radius: 3px;
-  color: black;
-  border: 1px solid #d8d8d8 !important;
   background-color: white;
   -webkit-appearance: none;
   -moz-appearance: none;
+  -ms-appearance: none;
   font-size: 1em;
-  font-weight: 600;
-  outline: none; }
+  font-weight: 600; }
   button:focus {
-    outline: 2px solid orange; }
+    outline-color: blue; }
   button:hover {
     cursor: pointer;
     border: 1px solid #aaa; }
 
-#current {
-  background-color: yellow;
-  border-radius: 3px; }
+#app div {
+  margin-top: 1.25rem; }
 
-#results {
-  border: 1px solid #ddd;
-  border-radius: 5px;
+#app #results {
   padding: 1.25rem;
   display: none; }
-  #results li {
-    font-size: 1.5rem; }
+  #app #results ul {
+    padding: 0;
+    margin: 0;
+    list-style: none; }
+
+#app #timer {
+  font-size: 2rem; }
+  #app #timer small {
+    font-size: 1.15rem;
+    font-weight: 400; }
+
+#app #template {
+  font-size: 1.5rem;
+  padding: 1.5rem;
+  border-radius: 5px;
+  position: relative;
+  overflow-y: auto;
+  max-height: 6rem; }
+  #app #template .word {
+    border-radius: 5px; }
+  #app #template #current {
+    background-color: yellow;
+    padding: 0.2rem 0.4rem; }
+  @media (max-width: 768px) {
+    #app #template {
+      font-size: 1.25rem;
+      padding: 1rem; } }
+
+#app #input {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 0.75rem; }
+  #app #input #input-field {
+    font-size: 1.5rem;
+    outline: none !important;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    display: block;
+    padding: 1.5rem;
+    background-color: #f3f4f4; }
+    #app #input #input-field .disabled:hover {
+      cursor: not-allowed; }
 
 footer {
   font-size: 1.5rem;
+  font-weight: 200;
   width: inherit;
   position: fixed;
   bottom: 0;
-  background-color: white;
-  padding: 0.5rem 0 3rem 0;
-  box-shadow: 0px 0px 25px 20px white; }
+  padding: 3rem 0; }
+  footer #project-title {
+    font-weight: 400; }
   footer li {
     display: inline; }
   footer a {
     border-bottom: 0.3rem solid blue;
-    font-weight: 600; }
+    display: inline-block; }

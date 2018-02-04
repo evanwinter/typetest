@@ -13,6 +13,7 @@ const sampleTexts = [
 ];
 
 const timer = document.getElementById('timer'),
+			timeLeft = document.getElementById('time-left'),
 			inputField = document.getElementById('input-field'),
 			template = document.getElementById('template'),
 			results = document.getElementById('results'),
@@ -40,59 +41,55 @@ function displayText(splitText) {
 	template.innerHTML = templateStr;
 }
 
+
 function startTimer() {
-	let seconds_left = 60,
-			interval = setInterval(() => {
-				timer.innerHTML = --seconds_left;
-				if (seconds_left <= 30)
-					timer.style.color = "orange";
-				if (seconds_left <= 10)
-					timer.style.color = "red";
-				if (seconds_left <= 0) {
-					timer.innerHTML = "";
-					clearInterval(interval);
-					timeUp();
-				}
-			}, 1000);
+	let seconds_left = 60,	// start with 60 seconds
+		interval = setInterval(() => {
+			timeLeft.innerHTML = --seconds_left;
+			if (seconds_left <= 30)								
+				timer.style.color = "orange";
+			if (seconds_left <= 10)
+				timer.style.color = "red";
+			if (seconds_left <= 0) {
+				clearInterval(interval);	
+				timeUp();
+			}
+		}, 1000);	// 1-second intervals
 }
 
 function timeUp() {
-	disableInput();
-	calculateScores();
-	displayResults();
-
+	// When time remaining reaches zero...
+	disableInput();			// Disable input field.
+	calculateScores();	// Calculate user's scores.
+	displayResults();		// Show the results div with updated scores.
 	document.getElementById('start-button').style.display = "none";
 	document.getElementById('reset-button').innerHTML = "Try Again";
 }
 
 function disableInput() {
 	inputField.disabled = true;
-	inputField.style.backgroundColor = "#eee";
+	inputField.style.backgroundColor = "#f3f4f4";
 	inputField.classList.add('disabled');
 }
 
 function getUserInput(currentIndex, inputField, splitText) {
 	const highlighted = document.getElementById('current');
 	inputField.addEventListener('keydown', function(event) {
+		// Every time user presses spacebar...
 		if (event.which === 32) {
 			let thisWord = inputField.value.trim();
-			if (thisWord !== '') {
-				
+			if (thisWord !== '') {	// Only execute they typed something
 				// Update total character and word counts.
 				totalCharCount += thisWord.length;
 				totalWordCount++;
-				
 				// Update the user's total score.
 				totalPenalties += getWordPenalty(currentIndex, splitText, thisWord);
-				
-				// Highlight the next word to be typed.
-				let lastHighlightOffset = getElemDistance(highlighted);
-				updateSampleText(++currentIndex, splitText, lastHighlightOffset);
-				inputField.value = '';
+				// Highlight the next word to be typed, and shift words as needed.
+				updateSampleText(++currentIndex, splitText);
+				inputField.value = '';	// Clear the input field
 			}
 		}
 	});
-
 }
 
 function createCompoundString(words) {
@@ -102,18 +99,8 @@ function createCompoundString(words) {
 	return compoundString;
 }
 
-function getElemDistance(elem) {
-    var location = 0;
-    if (elem.offsetParent) {
-        do {
-            location += elem.offsetTop;
-            elem = elem.offsetParent;
-        } while (elem);
-    }
-    return location >= 0 ? location : 0;
-};
-
 function inRange(num, lower, upper) {
+	// Returns true IFF 'num' is within a specified range (lower inclusive, upper exclusive)
 	return ((num >= lower) && (num < upper));
 }
 
@@ -129,25 +116,29 @@ function updateSampleText(currentIndex, splitText, offset) {
 			followingWordsStr,
 			templateStr;
 
+	
 	let rangeLower = 0,
 			rangeUpper = 30;
 
-	if (inRange(currentIndex, rangeLower, rangeUpper)) {
-		precedingWords = splitText.slice(rangeLower, currentIndex);
-	} else if (inRange(currentIndex, rangeLower+30, rangeUpper+30)) {
-		precedingWords = splitText.slice(rangeLower+30, currentIndex);
-	} else if (inRange(currentIndex, rangeLower+60, rangeUpper+60)) {
-		precedingWords = splitText.slice(rangeLower+60, currentIndex);
-	} else if (inRange(currentIndex, rangeLower+90, rangeUpper+90)) {
-		precedingWords = splitText.slice(rangeLower+90, currentIndex);
-	} else if (inRange(currentIndex, rangeLower+120, rangeUpper+120)) {
-		precedingWords = splitText.slice(rangeLower+120, currentIndex);
+	// Build arrays containing words preceding and following the current word
+	if (inRange(currentIndex, 0, 30)) {
+		precedingWords = splitText.slice(0, currentIndex);
+	} else if (inRange(currentIndex, 0+30, 30+30)) {
+		precedingWords = splitText.slice(0+30, currentIndex);
+	} else if (inRange(currentIndex, 0+60, 30+60)) {
+		precedingWords = splitText.slice(0+60, currentIndex);
+	} else if (inRange(currentIndex, 0+90, 30+90)) {
+		precedingWords = splitText.slice(0+90, currentIndex);
+	} else if (inRange(currentIndex, 0+120, 30+120)) {
+		precedingWords = splitText.slice(0+120, currentIndex);
 	}
 	followingWords = splitText.slice(currentIndex+1, splitText.length);
 	
+	// Turn those arrays into strings.
 	precedingStr = createCompoundString(precedingWords);
 	followingStr = createCompoundString(followingWords);
 
+	// Concatenate the strings and display the updated template on the page.
 	templateStr = precedingStr + currentStr + followingStr;
 	template.innerHTML = templateStr;
 
@@ -182,39 +173,36 @@ function getWordPenalty(currentIndex, splitText, thisWord) {
 	return levenshteinDist;
 }
 
-function calculateScores() {
+function calculateScores(charCount, penaltyCount) {
 	percentAccuracy = Math.round(((totalCharCount - totalPenalties) / totalCharCount) * 100);
 }
 
 function displayResults() {
-	results.style.display = "default";
+	if (percentAccuracy < 0 || isNaN(percentAccuracy))
+		percentAccuracy = 0;
+	results.style.display = "block";
 	results.innerHTML = `
 		<ul>
-			<li id="speed">Speed: <strong>${totalWordCount} words per minute</strong></li>
-			<li id="accuracy">Accuracy: <strong>${percentAccuracy} percent</strong></li>
+			<li id="speed"><strong>Speed</strong>: ${totalWordCount} words per minute</li>
+			<li id="accuracy"><strong>Accuracy</strong>: ${percentAccuracy} percent</li>
 		</ul>`;
 }
 
-/*
-*		Main function
-*/
-
 document.addEventListener("DOMContentLoaded", function(event) {
-	
 	let currentIndex = 0;
 	let started = false;
-
+	// Begin test when user presses the spacebar (simulating start button click)
 	window.addEventListener('keydown', function(event) {
 		if (event.which === 32 && started === false) {
 	    event.preventDefault();
+	    started = true;
 	    startButton.click();
 	  }
 	});
-
-	startButton.focus();
-	// When user clicks Start, begin the test.
+	// Or begin test when user actually clicks the start button
 	startButton.addEventListener('click', function() {
 		started = true;
+		startButton.style.display = "none";	// don't allow multiple timers going
 		enableInput(inputField);
 		displayText(splitText);
 		startTimer();

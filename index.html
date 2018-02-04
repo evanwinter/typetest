@@ -6,46 +6,46 @@
 	</title>
 	<link rel="stylesheet" type="text/css" href="css/styles.min.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+	<link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
 </head>
 <body>
 <div class="container">
 
-<section id="timer">
-	60
-</section>
-
-<section id="results-section">
-	<div id="results">
-		
-	</div>
-</section>
-
-<section id="template-wrapper">
-	<div id="template">
-		Press space to begin
-	</div>
-</section>
-
-<section id="input-section">
+<section id="app">
 	
-	<input id="input-field" class="disabled" type="text" name="input" disabled>
+	<div id="timer">
+		<strong><span id="time-left">60</span></strong>
+		<small>seconds remaining</small>
+	</div>
 
-	<div class="buttons">
-		<button id="start-button">Start</button>
-		<a href="index.html"><button id="reset-button">Reset</button></a>
+	<div id="results" class="component"></div>
+
+	<div id="template" class="component">
+		Press space to begin.
+	</div>
+
+	<div id="input">
+		<input id="input-field" class="disabled" type="text" name="input" disabled>
+	</div>
+
+	<div id="buttons">
+		<a href="#"><button id="start-button" class="component">Start</button></a>
+		<a href="index.html"><button id="reset-button" class="component">Reset</button></a>
 	</div>
 
 </section>
 
 <footer>
-	<ul>
-		<li>TypeTest</li>
-		<li> by <a href="http://evanwinter.me" target="_blank">Evan Winter</a></li>
-	</ul>
+	<span id="project-title">
+		TypeTest
+	</span>
+	 by 
+	<a href="http://evanwinter.me" target="_blank">
+		<strong>Evan Winter</strong>
+	</a>
 </footer>
 
 </div>
-</body>
 <script type="text/javascript" src="js/index.js"></script>
+</body>
 </html>

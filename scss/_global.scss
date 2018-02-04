@@ -1,0 +1,52 @@
+// Variables
+$accent: blue;
+$light-gray: #f3f4f4;
+$med-gray: #ddd;
+$dark-gray: #aaa;
+$dark: #212529;
+
+body {
+	margin: 0;
+	padding: 0;
+	font-size: 16px;
+	background-color: white;
+	color: $dark;
+	font-family: system-ui, "Helvetica", "Source Sans Pro";
+}
+
+.container {
+	width: 80%;
+	margin: 0 auto;
+	max-width: 50rem;
+	padding-top: 1.5rem;
+}
+
+.component {
+	border: 1px solid $med-gray;
+	border-radius: 3px;
+}
+
+a, a:visited {
+	text-decoration: none;
+	color: $dark;
+	&:hover {
+		color: $accent;
+	}
+}
+
+button {
+	padding: 1rem;
+	background-color: white;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	-ms-appearance: none;
+	font-size: 1em;
+	font-weight: 600;
+	&:focus {
+		outline-color: blue;
+	}
+	&:hover {
+		cursor: pointer;
+		border: 1px solid $dark-gray;
+	}
+}
