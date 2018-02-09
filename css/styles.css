@@ -1,7 +1,7 @@
 /*!
- *  v1.0.0 (https://github.com/evanwinter/wpm-vanilla#readme)
- * 
- * Licensed under ISC
+ *  v1.0.0 (https://github.com/evanwinter/typetest#readme)
+ * Evan Winter
+ * Licensed under MIT
  */
 body {
   margin: 0;
@@ -72,7 +72,7 @@ button {
     padding: 0.2rem 0.4rem; }
   @media (max-width: 768px) {
     #app #template {
-      font-size: 1.25rem;
+      font-size: 1rem;
       padding: 1rem; } }
 
 #app #input {
@@ -95,7 +95,6 @@ footer {
   font-size: 1.5rem;
   font-weight: 200;
   width: inherit;
-  position: fixed;
   bottom: 0;
   padding: 3rem 0; }
   footer #project-title {
