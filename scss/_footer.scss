@@ -1,18 +1,15 @@
 footer {
 	font-size: 1.5rem;
-	font-weight: 200;
 	width: inherit;
-	// position: fixed;
-	bottom: 0;
 	padding: 3rem 0;
 	#project-title {
 		font-weight: 400;
+		display: block;
 	}
 	li {
 		display: inline;
 	}
 	a {
-		border-bottom: 0.3rem solid $accent;
-		display: inline-block;
+		font-size: 1rem;
 	}
 }
