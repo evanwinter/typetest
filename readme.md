@@ -8,4 +8,4 @@ Run it locally with:
 
 `cd typetest && npm install`
 
-`gulp dev`
+`npm start`
