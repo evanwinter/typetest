@@ -3,20 +3,13 @@
   "version": "1.0.0",
   "description": "Simple web app for testing one's typing speed and accuracy.",
   "main": "js/index.js",
-  "dependencies": {
-    "gulp": "^3.9.1"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "browser-sync": "2.18.13",
-    "gulp": "^3.9.1",
-    "gulp-clean-css": "3.9.0",
-    "gulp-filter": "^5.0.1",
-    "gulp-header": "1.8.9",
-    "gulp-rename": "^1.2.2",
-    "gulp-sass": "^3.1.0",
-    "gulp-uglify": "3.0.0"
+    "parcel-bundler": "^1.12.3",
+    "sass": "^1.20.1"
   },
   "scripts": {
+    "start": "parcel index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
